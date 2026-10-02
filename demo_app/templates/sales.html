@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Venda - PDV Demo{% endblock %}
+{% block content %}
+<h1 id="page-title">Nova venda</h1>
+
+<div>
+  <select id="product-select">
+    <option value="">Selecione um produto</option>
+    {% for p in products %}
+    <option value="{{ p.code }}" data-id="{{ p.id }}" data-name="{{ p.name }}" data-price="{{ '%.2f'|format(p.price) }}">{{ p.code }} - {{ p.name }}</option>
+    {% endfor %}
+  </select>
+  <input id="quantity-input" type="text" value="1" size="4" aria-label="Quantidade">
+  <button id="add-to-cart" type="button">Adicionar ao carrinho</button>
+</div>
+
+<div id="sale-error" class="alert error" hidden></div>
+
+<table id="cart-table">
+  <thead><tr><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Subtotal</th></tr></thead>
+  <tbody id="cart-body"></tbody>
+</table>
+<h2>Total: <span id="cart-total">R$ 0,00</span></h2>
+<button id="finish-sale" type="button">Finalizar venda</button>
+
+<div id="sale-confirmation" class="alert success" hidden>
+  <span id="confirmation-message"></span> - Total: <span id="confirmation-total"></span>
+</div>
+
+<script>
+(() => {
+  const cart = [];
+  const $ = (id) => document.getElementById(id);
+  const fmt = (cents) => "R$ " + (cents / 100).toFixed(2).replace(".", ",");
+
+  function setError(message) {
+    $("sale-error").textContent = message || "";
+    $("sale-error").hidden = !message;
+  }
+
+  function render() {
+    const body = $("cart-body");
+    body.innerHTML = "";
+    let total = 0;
+    for (const item of cart) {
+      const subtotal = item.priceCents * item.quantity;
+      total += subtotal;
+      const row = body.insertRow();
+      row.dataset.code = item.code;
+      [item.name, item.quantity, fmt(item.priceCents), fmt(subtotal)].forEach((value, i) => {
+        const cell = row.insertCell();
+        cell.className = ["cart-name", "cart-qty", "cart-unit", "cart-subtotal"][i];
+        cell.textContent = value;
+      });
+    }
+    $("cart-total").textContent = fmt(total);
+  }
+
+  $("add-to-cart").addEventListener("click", () => {
+    $("sale-confirmation").hidden = true;
+    const option = $("product-select").selectedOptions[0];
+    if (!option || !option.value) return setError("Selecione um produto");
+    const raw = $("quantity-input").value.trim();
+    const quantity = /^\d+$/.test(raw) ? Number(raw) : 0;
+    if (quantity < 1) return setError("Quantidade inválida");
+    setError("");
+    const existing = cart.find((i) => i.code === option.value);
+    if (existing) {
+      existing.quantity += quantity;
+    } else {
+      cart.push({
+        id: Number(option.dataset.id), code: option.value, name: option.dataset.name,
+        priceCents: Math.round(parseFloat(option.dataset.price) * 100), quantity,
+      });
+    }
+    render();
+  });
+
+  $("finish-sale").addEventListener("click", async () => {
+    $("sale-confirmation").hidden = true;
+    if (cart.length === 0) return setError("Carrinho vazio");
+    setError("");
+    const response = await fetch("/api/sales", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: cart.map((i) => ({ product_id: i.id, quantity: i.quantity })) }),
+    });
+    const data = await response.json();
+    if (!response.ok) return setError(data.error);
+    $("confirmation-message").textContent = `Venda #${data.id} finalizada com sucesso`;
+    $("confirmation-total").textContent = fmt(Math.round(data.total * 100));
+    $("sale-confirmation").hidden = false;
+    cart.length = 0;
+    render();
+  });
+})();
+</script>
+{% endblock %}

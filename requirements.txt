@@ -1,0 +1,8 @@
+pytest>=8.3,<9
+pytest-html>=4.1,<5
+selenium>=4.25,<5
+requests>=2.32,<3
+lxml>=5.3
+python-dotenv>=1.0,<2
+jsonschema>=4.23,<5
+Flask>=3.0,<4

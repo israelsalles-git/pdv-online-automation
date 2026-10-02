@@ -1,0 +1,26 @@
+{
+  "_comment": "Dados fictícios. NCM/CFOP são apenas demonstrativos e não representam regras fiscais oficiais.",
+  "seeded_products": [
+    {"code": "1001", "name": "Arroz 5kg", "price": 25.90, "ncm": "10063021"},
+    {"code": "1002", "name": "Feijão Carioca 1kg", "price": 8.49, "ncm": "07133319"},
+    {"code": "1003", "name": "Açúcar Refinado 1kg", "price": 4.99, "ncm": "17019900"}
+  ],
+  "invalid_products": [
+    {"id": "missing_name", "payload": {"code": "INV-1", "price": 10.0}, "error": "nome"},
+    {"id": "blank_name", "payload": {"code": "INV-2", "name": "   ", "price": 10.0}, "error": "nome"},
+    {"id": "missing_code", "payload": {"name": "Sem código", "price": 10.0}, "error": "código"},
+    {"id": "missing_price", "payload": {"code": "INV-3", "name": "Sem preço"}, "error": "preço"},
+    {"id": "zero_price", "payload": {"code": "INV-4", "name": "Preço zero", "price": 0}, "error": "preço"},
+    {"id": "negative_price", "payload": {"code": "INV-5", "name": "Preço negativo", "price": -5.5}, "error": "preço"},
+    {"id": "text_price", "payload": {"code": "INV-6", "name": "Preço texto", "price": "abc"}, "error": "preço"},
+    {"id": "boolean_price", "payload": {"code": "INV-7", "name": "Preço booleano", "price": true}, "error": "preço"}
+  ],
+  "invalid_quantities": [
+    {"id": "zero", "value": 0},
+    {"id": "negative", "value": -1},
+    {"id": "fractional", "value": 1.5},
+    {"id": "text", "value": "abc"},
+    {"id": "null", "value": null},
+    {"id": "boolean", "value": true}
+  ]
+}

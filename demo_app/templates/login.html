@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Login - PDV Demo{% endblock %}
+{% block content %}
+<h1 id="login-title">Login</h1>
+{% if error %}<div id="login-error" class="alert error">{{ error }}</div>{% endif %}
+<form method="post" action="{{ url_for('login') }}" id="login-form">
+  <div><input id="username" name="username" placeholder="Usuário" autocomplete="username"></div>
+  <div><input id="password" name="password" type="password" placeholder="Senha" autocomplete="current-password"></div>
+  <button id="login-button" type="submit">Entrar</button>
+</form>
+{% endblock %}

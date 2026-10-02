@@ -1,0 +1,88 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+# Valores de DEMONSTRAÇÃO para o demo_app local. Ao apontar para um sistema real,
+# use GitHub Secrets (ex.: ${{ secrets.TEST_PASSWORD }}) em vez de valores fixos.
+env:
+  BASE_URL: http://127.0.0.1:5055
+  API_URL: http://127.0.0.1:5055/api
+  TEST_USERNAME: admin
+  TEST_PASSWORD: 123456
+  BROWSER: chrome
+  HEADLESS: "true"
+  START_DEMO_APP: "true"
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  api:
+    name: API tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run API tests
+        run: pytest -m api --html=reports/report-api.html --junitxml=reports/junit-api.xml
+      - name: Upload reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-results
+          path: |
+            reports/
+            logs/
+          if-no-files-found: ignore
+
+  fiscal:
+    name: Fiscal (NFC-e XML) tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run fiscal tests
+        run: pytest -m fiscal --html=reports/report-fiscal.html --junitxml=reports/junit-fiscal.xml
+      - name: Upload reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fiscal-results
+          path: |
+            reports/
+            logs/
+          if-no-files-found: ignore
+
+  ui:
+    name: UI tests (Chrome headless)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - run: pip install -r requirements.txt
+      # O Selenium Manager baixa o chromedriver compatível com o Chrome instalado.
+      - name: Run UI tests
+        run: pytest -m ui --html=reports/report-ui.html --junitxml=reports/junit-ui.xml
+      - name: Upload reports, screenshots and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-results
+          path: |
+            reports/
+            logs/
+          if-no-files-found: ignore

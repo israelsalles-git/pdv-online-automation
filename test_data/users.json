@@ -1,0 +1,20 @@
+{
+  "_comment": "Credenciais VÁLIDAS ficam no .env (TEST_USERNAME/TEST_PASSWORD). Aqui só há dados de cenários negativos.",
+  "wrong_passwords": [
+    {"id": "wrong_password", "password": "senha-errada"},
+    {"id": "short_password", "password": "1"},
+    {"id": "blank_password", "password": " "},
+    {"id": "sql_injection_like", "password": "' OR '1'='1"}
+  ],
+  "unknown_users": [
+    {"id": "unknown_user", "username": "usuario.inexistente"},
+    {"id": "similar_name", "username": "admin_x"},
+    {"id": "special_chars", "username": "<script>alert(1)</script>"}
+  ],
+  "missing_fields": [
+    {"id": "empty_body", "payload": {}},
+    {"id": "only_username", "payload": {"username": "usuario"}},
+    {"id": "only_password", "payload": {"password": "senha"}},
+    {"id": "empty_strings", "payload": {"username": "", "password": ""}}
+  ]
+}

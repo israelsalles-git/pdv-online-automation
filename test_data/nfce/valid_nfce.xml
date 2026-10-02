@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DOCUMENTO FICTÍCIO, EXCLUSIVAMENTE PARA TESTES AUTOMATIZADOS.
+  CNPJ, chave de acesso, NCMs, CFOP e alíquotas são dados de demonstração (tpAmb=2, homologação).
+  Não representam regras fiscais oficiais nem uma nota real.
+-->
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe Id="NFe41261011222333000181650010000012341876543210" versao="4.00">
+    <ide>
+      <cUF>41</cUF>
+      <cNF>87654321</cNF>
+      <natOp>VENDA AO CONSUMIDOR</natOp>
+      <mod>65</mod>
+      <serie>1</serie>
+      <nNF>1234</nNF>
+      <dhEmi>2026-10-02T14:35:10-03:00</dhEmi>
+      <tpNF>1</tpNF>
+      <idDest>1</idDest>
+      <tpImp>4</tpImp>
+      <tpEmis>1</tpEmis>
+      <cDV>0</cDV>
+      <tpAmb>2</tpAmb>
+      <finNFe>1</finNFe>
+      <indFinal>1</indFinal>
+      <indPres>1</indPres>
+    </ide>
+    <emit>
+      <CNPJ>11222333000181</CNPJ>
+      <xNome>EMPRESA FICTICIA DE TESTE LTDA</xNome>
+      <xFant>MERCADO DEMO</xFant>
+      <CRT>3</CRT>
+    </emit>
+    <det nItem="1">
+      <prod>
+        <cProd>1001</cProd>
+        <xProd>Arroz 5kg</xProd>
+        <NCM>10063021</NCM>
+        <CFOP>5102</CFOP>
+        <uCom>UN</uCom>
+        <qCom>2.0000</qCom>
+        <vUnCom>25.9000</vUnCom>
+        <vProd>51.80</vProd>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <ICMS><ICMS00><orig>0</orig><CST>00</CST><modBC>3</modBC><vBC>51.80</vBC><pICMS>18.0000</pICMS><vICMS>9.32</vICMS></ICMS00></ICMS>
+        <PIS><PISAliq><CST>01</CST><vBC>51.80</vBC><pPIS>0.6500</pPIS><vPIS>0.34</vPIS></PISAliq></PIS>
+        <COFINS><COFINSAliq><CST>01</CST><vBC>51.80</vBC><pCOFINS>3.0000</pCOFINS><vCOFINS>1.55</vCOFINS></COFINSAliq></COFINS>
+      </imposto>
+    </det>
+    <det nItem="2">
+      <prod>
+        <cProd>1002</cProd>
+        <xProd>Feijão Carioca 1kg</xProd>
+        <NCM>07133319</NCM>
+        <CFOP>5102</CFOP>
+        <uCom>UN</uCom>
+        <qCom>3.0000</qCom>
+        <vUnCom>8.4900</vUnCom>
+        <vProd>25.47</vProd>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <ICMS><ICMS00><orig>0</orig><CST>00</CST><modBC>3</modBC><vBC>25.47</vBC><pICMS>18.0000</pICMS><vICMS>4.58</vICMS></ICMS00></ICMS>
+        <PIS><PISAliq><CST>01</CST><vBC>25.47</vBC><pPIS>0.6500</pPIS><vPIS>0.17</vPIS></PISAliq></PIS>
+        <COFINS><COFINSAliq><CST>01</CST><vBC>25.47</vBC><pCOFINS>3.0000</pCOFINS><vCOFINS>0.76</vCOFINS></COFINSAliq></COFINS>
+      </imposto>
+    </det>
+    <det nItem="3">
+      <prod>
+        <cProd>1003</cProd>
+        <xProd>Açúcar Refinado a Granel</xProd>
+        <NCM>17019900</NCM>
+        <CFOP>5102</CFOP>
+        <uCom>KG</uCom>
+        <qCom>1.5000</qCom>
+        <vUnCom>4.9900</vUnCom>
+        <vProd>7.49</vProd>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <ICMS><ICMS00><orig>0</orig><CST>00</CST><modBC>3</modBC><vBC>7.49</vBC><pICMS>18.0000</pICMS><vICMS>1.35</vICMS></ICMS00></ICMS>
+        <PIS><PISAliq><CST>01</CST><vBC>7.49</vBC><pPIS>0.6500</pPIS><vPIS>0.05</vPIS></PISAliq></PIS>
+        <COFINS><COFINSAliq><CST>01</CST><vBC>7.49</vBC><pCOFINS>3.0000</pCOFINS><vCOFINS>0.22</vCOFINS></COFINSAliq></COFINS>
+      </imposto>
+    </det>
+    <total>
+      <ICMSTot>
+        <vBC>84.76</vBC>
+        <vICMS>15.25</vICMS>
+        <vProd>84.76</vProd>
+        <vDesc>0.00</vDesc>
+        <vPIS>0.56</vPIS>
+        <vCOFINS>2.53</vCOFINS>
+        <vOutro>0.00</vOutro>
+        <vNF>84.76</vNF>
+      </ICMSTot>
+    </total>
+    <pag>
+      <detPag><tPag>01</tPag><vPag>84.76</vPag></detPag>
+    </pag>
+  </infNFe>
+</NFe>

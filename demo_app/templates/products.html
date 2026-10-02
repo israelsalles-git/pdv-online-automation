@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Produtos - PDV Demo{% endblock %}
+{% block content %}
+<h1 id="page-title">Produtos</h1>
+
+<form method="get" action="{{ url_for('products_page') }}" id="search-form">
+  <input id="search-input" name="q" value="{{ q }}" placeholder="Buscar por código ou nome">
+  <button id="search-button" type="submit">Buscar</button>
+</form>
+
+<h2>{{ "Editar produto" if editing else "Novo produto" }}</h2>
+<form method="post" action="{{ url_for('products_save') }}" id="product-form">
+  <input type="hidden" name="id" value="{{ editing.id if editing else '' }}">
+  <input id="product-code" name="code" placeholder="Código" value="{{ editing.code if editing else '' }}">
+  <input id="product-name" name="name" placeholder="Nome" value="{{ editing.name if editing else '' }}">
+  <input id="product-price" name="price" placeholder="Preço" value="{{ '%.2f'|format(editing.price) if editing else '' }}">
+  <input id="product-ncm" name="ncm" placeholder="NCM" value="{{ editing.ncm if editing else '' }}">
+  <button id="save-product" type="submit">Salvar</button>
+  {% if editing %}<a id="cancel-edit" href="{{ url_for('products_page') }}">Cancelar</a>{% endif %}
+</form>
+
+<table id="products-table">
+  <thead><tr><th>Código</th><th>Nome</th><th>Preço</th><th>NCM</th><th>Ações</th></tr></thead>
+  <tbody>
+  {% for p in products %}
+    <tr data-code="{{ p.code }}">
+      <td class="code">{{ p.code }}</td>
+      <td class="name">{{ p.name }}</td>
+      <td class="price">{{ p.price|brl }}</td>
+      <td class="ncm">{{ p.ncm }}</td>
+      <td>
+        <a class="edit-button" href="{{ url_for('products_page', edit=p.id) }}">Editar</a>
+        <form class="inline" method="post" action="{{ url_for('products_delete', product_id=p.id) }}">
+          <button class="delete-button" type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr id="empty-row"><td colspan="5">Nenhum produto encontrado</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - PDV Demo{% endblock %}
+{% block content %}
+<h1 id="dashboard-title">Dashboard</h1>
+<p id="welcome-message">Bem-vindo, {{ user }}</p>
+<ul>
+  <li>Produtos cadastrados: <span id="stat-products">{{ products }}</span></li>
+  <li>Clientes cadastrados: <span id="stat-customers">{{ customers }}</span></li>
+  <li>Vendas realizadas: <span id="stat-sales">{{ sales }}</span></li>
+</ul>
+{% endblock %}
